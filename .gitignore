@@ -1,0 +1,52 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+#屏蔽VS目录文件
+.vs
+Debug
+Release
+x64
+.idea
+#屏蔽VS工程文件
+*.sdf
+*.v12
+*.suo
+*.sln
+*.vcxproj
+*.filters
+*.user
+*.xml
+
+#屏蔽.bat自动提交程序
+*.bat
