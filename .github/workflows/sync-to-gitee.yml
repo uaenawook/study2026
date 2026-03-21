@@ -7,7 +7,7 @@ jobs:
       - name: Mirror the GitHub repo to Gitee
         uses: Yikun/gitee-mirror-action@master
         with:
-          src: github/uaenawook
-          dst: gitee/uaenawook
+          src: github/uaenawook/study2026
+          dst: gitee/uaenawook/study2026
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
