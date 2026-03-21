@@ -1,0 +1,13 @@
+name: Sync to Gitee
+on: [push]
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mirror the GitHub repo to Gitee
+        uses: Yikun/gitee-mirror-action@master
+        with:
+          src: github/uaenawook
+          dst: gitee/uaenawook
+          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_TOKEN }}
