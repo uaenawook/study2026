@@ -1,5 +1,9 @@
 name: Sync to Gitee
-on: [push]
+on:
+  push:
+    branches:
+      - master
+      - main
 
 jobs:
   repo-sync:
