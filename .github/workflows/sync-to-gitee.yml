@@ -1,5 +1,5 @@
 name: Sync to Gitee
-on: [push] # 每次推送都会触发
+on: [push]
 
 jobs:
   repo-sync:
@@ -8,14 +8,10 @@ jobs:
       - name: Mirror the GitHub repo to Gitee
         uses: Yikun/gitee-mirror-action@master
         with:
-          # 源端：github/你的用户名
           src: github/uaenawook
-          # 目的端：gitee/你的用户名（或组织名）
           dst: gitee/uaenawook
-          # 刚才在 GitHub Secrets 里设的名字
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token: ${{ secrets.GITEE_TOKEN }}
-          # 重点：指定你要同步的仓库名
           static_list: "study2026"
           force_update: true
           debug: true
