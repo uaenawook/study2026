@@ -8,15 +8,15 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Mirror the GitHub repo to Gitee
-        # 换成了加强版插件，支持显式的 https 模式
-        uses: Yikun/hub-mirror-action@master
+      # 第一步：拉取 GitHub 代码
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          src: github/uaenawook
-          dst: gitee/uaenawook
-          dst_token: ${{ secrets.GITEE_TOKEN }}
-          # 强制指定 HTTPS，彻底甩掉 SSH 密钥的烦恼
-          clone_style: "https"
-          static_list: "study2026"
-          force_update: true
-          debug: true
+          fetch-depth: 0 # 拉取所有分支和历史记录
+
+      # 第二步：使用 HTTPS Token 直接强制推送
+      - name: Push to Gitee (Manual Mode)
+        run: |
+          # 这一行是核心：直接把 Token 拼在 HTTPS 链接里，绕过所有 SSH 检查
+          git remote add gitee https://uaenawook:${{ secrets.GITEE_TOKEN }}@gitee.com/uaenawook/study2026.git
+          git push -f gitee main
