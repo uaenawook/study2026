@@ -8,20 +8,16 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     steps:
-      # 第一步：将 Gitee 加入已知主机列表，防止 SSH 挂起
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
-
-      # 第二步：执行原有的同步任务
       - name: Mirror the GitHub repo to Gitee
         uses: Yikun/gitee-mirror-action@master
         with:
+          # 来源和目的地保持不变
           src: github/uaenawook
           dst: gitee/uaenawook
-          dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+          # 核心修改：使用 Token 认证，移除 dst_key
           dst_token: ${{ secrets.GITEE_TOKEN }}
+          # 显式指定使用 https 协议，避开 SSH 指纹检查
+          clone_style: "https"
           static_list: "study2026"
           force_update: true
           debug: true
