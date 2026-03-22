@@ -8,6 +8,13 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     steps:
+      # 第一步：将 Gitee 加入已知主机列表，防止 SSH 挂起
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
+
+      # 第二步：执行原有的同步任务
       - name: Mirror the GitHub repo to Gitee
         uses: Yikun/gitee-mirror-action@master
         with:
