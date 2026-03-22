@@ -345,9 +345,51 @@
         },
         {
             "id": 1774106122.7153187,
-            "text": "链接gitee和GitHub、链接leetcode和GitHub",
-            "completed": false,
+            "text": "链接gitee和GitHub",
+            "completed": true,
             "date": "2026-03-21"
+        },
+        {
+            "id": 1774126298.4001544,
+            "text": "链接leetcode和GitHub",
+            "completed": false,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774126299.471803,
+            "text": "编程学习",
+            "completed": false,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774126300.000219,
+            "text": "英语学习",
+            "completed": false,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774126300.4714143,
+            "text": "多邻国打卡",
+            "completed": false,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774126300.7340636,
+            "text": "Gitee维护",
+            "completed": false,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774126301.0968902,
+            "text": "LeetCode签到",
+            "completed": false,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774126301.3868654,
+            "text": "QQ音乐签到",
+            "completed": false,
+            "date": "2026-03-22"
         }
     ],
     "motto": "千里之行，始于足下。王总，今日事今日毕！",
