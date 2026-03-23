@@ -370,13 +370,13 @@
         {
             "id": 1774126300.4714143,
             "text": "多邻国打卡",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-22"
         },
         {
             "id": 1774126300.7340636,
             "text": "Gitee维护",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-22"
         },
         {
@@ -388,7 +388,13 @@
         {
             "id": 1774126301.3868654,
             "text": "QQ音乐签到",
-            "completed": false,
+            "completed": true,
+            "date": "2026-03-22"
+        },
+        {
+            "id": 1774190064.0927699,
+            "text": "博客托管到GitHub",
+            "completed": true,
             "date": "2026-03-22"
         }
     ],
