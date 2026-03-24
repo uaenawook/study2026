@@ -10,8 +10,18 @@ int main()
 	QueuePush(&q, 3);
 	QueuePush(&q, 4);
 	
-	printf("%d\n", QueueFront(&q));
+	printf("%d ", QueueFront(&q));
 	QueuePop(&q);
+	printf("%d ", QueueFront(&q));
+	QueuePop(&q);
+	printf("%d ", QueueFront(&q));
+	QueuePop(&q);
+	//printf("%d ", QueueFront(&q));
+	//QueuePop(&q);
+
+	printf("%d ", QueueEmpty(&q));
+
+	QueueDestroy(&q);
 
 
 	return 0;

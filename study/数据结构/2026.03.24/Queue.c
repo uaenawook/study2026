@@ -5,7 +5,7 @@
 void QueueInit(Queue* pq)
 {
 	assert(pq);
-	pq->phead = pq->size = NULL;
+	pq->phead = pq->tail = NULL;
 	pq->size = 0;
 }
 
@@ -13,12 +13,15 @@ void QueueInit(Queue* pq)
 //插入
 void QueuePush(Queue* pq, QDataType x)
 {
+	assert(pq);
 	QNode* newNode = (QNode*)malloc(sizeof(QNode));
 	if (newNode == NULL)
 	{
 		perror("QueuePush Node fail");
 		exit(-1);
 	}
+	newNode->next = NULL;
+	newNode->val = x;
 	if (pq->tail == NULL)
 	{
 		pq->phead = pq->tail = newNode;
@@ -42,9 +45,9 @@ void QueuePop(Queue* pq)
 	}
 	else
 	{
-		Queue* cur = pq->phead;
-		pq->phead = pq->phead->next;
-		free(cur);
+		QNode* next = pq->phead->next;
+		free(pq->phead);
+		pq->phead = next;
 	}
 	pq->size--;
 }
@@ -52,20 +55,43 @@ void QueuePop(Queue* pq)
 //取数据
 QDataType QueueFront(Queue* pq)
 {
-	assert(pq && pq->size > 0);
+	assert(pq && pq->phead);
 
 	return pq->phead->val;
 }
-QDataType QueueBack(Queue* pq);
+QDataType QueueBack(Queue* pq)
+{
+	assert(pq && pq->tail);
+	return pq->tail->val;
+}
 
 //判空
-bool QueueEmpty(Queue* pq);
+bool QueueEmpty(Queue* pq)
+{
+	assert(pq);
+	return pq->size == 0;
+}
 //
-void QueueSize(Queue* pq);
+int QueueSize(Queue* pq)
+{
+	assert(pq);
+	return pq->size;
+}
 
 
 //销毁
 void QueueDestroy(Queue* pq)
 {
+	QNode* cur = pq->phead;
+	//先销毁节点
+	while (cur)
+	{
+		QNode* next = cur->next;
+		free(cur);
+		cur = next;
+	}
+	//再销毁指针结构体
+	pq->phead = pq->tail = NULL;
+	pq->size = 0;
 
 }

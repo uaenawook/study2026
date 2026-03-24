@@ -39,5 +39,5 @@ QDataType QueueBack(Queue* pq);
 //еп©у
 bool QueueEmpty(Queue* pq);
 //
-void QueueSize(Queue* pq);
+int QueueSize(Queue* pq);
 
