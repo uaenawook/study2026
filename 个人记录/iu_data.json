@@ -396,6 +396,42 @@
             "text": "博客托管到GitHub",
             "completed": true,
             "date": "2026-03-22"
+        },
+        {
+            "id": 1774334361.5444288,
+            "text": "编程学习",
+            "completed": false,
+            "date": "2026-03-24"
+        },
+        {
+            "id": 1774334361.8919263,
+            "text": "英语学习",
+            "completed": false,
+            "date": "2026-03-24"
+        },
+        {
+            "id": 1774334362.2312958,
+            "text": "多邻国打卡",
+            "completed": true,
+            "date": "2026-03-24"
+        },
+        {
+            "id": 1774334362.5934575,
+            "text": "Gitee维护",
+            "completed": false,
+            "date": "2026-03-24"
+        },
+        {
+            "id": 1774334362.9157813,
+            "text": "LeetCode签到",
+            "completed": false,
+            "date": "2026-03-24"
+        },
+        {
+            "id": 1774334363.263711,
+            "text": "QQ音乐签到",
+            "completed": true,
+            "date": "2026-03-24"
         }
     ],
     "motto": "千里之行，始于足下。王总，今日事今日毕！",
