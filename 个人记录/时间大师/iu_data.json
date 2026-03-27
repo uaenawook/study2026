@@ -1,5 +1,24 @@
 {
-    "alarms": [],
+    "alarms": [
+        {
+            "id": 1774522329.1952958,
+            "title": "学习C++",
+            "time": "19:17:08",
+            "sound": "清晨节奏",
+            "continuous": true,
+            "ring_count": 1,
+            "active": false
+        },
+        {
+            "id": 1774593955.024248,
+            "title": "学习C++",
+            "time": "15:45:51",
+            "sound": "清晨节奏",
+            "continuous": true,
+            "ring_count": 1,
+            "active": false
+        }
+    ],
     "tasks": [
         {
             "id": 1773241427.970183,
@@ -400,13 +419,13 @@
         {
             "id": 1774334361.5444288,
             "text": "编程学习",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-24"
         },
         {
             "id": 1774334361.8919263,
             "text": "英语学习",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-24"
         },
         {
@@ -418,13 +437,13 @@
         {
             "id": 1774334362.5934575,
             "text": "Gitee维护",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-24"
         },
         {
             "id": 1774334362.9157813,
             "text": "LeetCode签到",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-24"
         },
         {
@@ -432,6 +451,78 @@
             "text": "QQ音乐签到",
             "completed": true,
             "date": "2026-03-24"
+        },
+        {
+            "id": 1774378097.9455497,
+            "text": "编程学习",
+            "completed": true,
+            "date": "2026-03-25"
+        },
+        {
+            "id": 1774378098.2432334,
+            "text": "英语学习",
+            "completed": false,
+            "date": "2026-03-25"
+        },
+        {
+            "id": 1774378098.5716336,
+            "text": "多邻国打卡",
+            "completed": true,
+            "date": "2026-03-25"
+        },
+        {
+            "id": 1774378098.9038618,
+            "text": "Gitee维护",
+            "completed": false,
+            "date": "2026-03-25"
+        },
+        {
+            "id": 1774378099.2182174,
+            "text": "LeetCode签到",
+            "completed": false,
+            "date": "2026-03-25"
+        },
+        {
+            "id": 1774378099.4623997,
+            "text": "QQ音乐签到",
+            "completed": true,
+            "date": "2026-03-25"
+        },
+        {
+            "id": 1774593937.5043652,
+            "text": "编程学习",
+            "completed": false,
+            "date": "2026-03-27"
+        },
+        {
+            "id": 1774593937.8139405,
+            "text": "英语学习",
+            "completed": true,
+            "date": "2026-03-27"
+        },
+        {
+            "id": 1774593938.1138217,
+            "text": "多邻国打卡",
+            "completed": true,
+            "date": "2026-03-27"
+        },
+        {
+            "id": 1774593938.4088454,
+            "text": "Gitee维护",
+            "completed": false,
+            "date": "2026-03-27"
+        },
+        {
+            "id": 1774593938.7139106,
+            "text": "LeetCode签到",
+            "completed": false,
+            "date": "2026-03-27"
+        },
+        {
+            "id": 1774593938.9940116,
+            "text": "QQ音乐签到",
+            "completed": false,
+            "date": "2026-03-27"
         }
     ],
     "motto": "千里之行，始于足下。王总，今日事今日毕！",
