@@ -1,5 +1,38 @@
 #include"Heap.h"
 
+
+
+void TestHeap1()
+{
+	int a[] = { 4,2,8,1,5,6,9,7};
+	HP hp;
+	HPInit(&hp);
+	for (size_t i = 0; i < sizeof(a) / sizeof(int); i++)
+	{
+		HPPush(&hp, a[i]);
+	}
+
+	//int i = 0;
+	//while (!HPEmpty(&hp))
+	//{
+	//	printf("%d ", HPTop(&hp));
+	//	a[i++] = HPTop(&hp);
+	//	HPPop(&hp);
+	//}
+	//printf("\n");
+
+	// 找出最大的前k个
+	/*int k = 0;
+	scanf("%d", &k);
+	while (k--)
+	{
+		printf("%d ", HPTop(&hp));
+		HPPop(&hp);
+	}
+	printf("\n");*/
+
+	HPDestroy(&hp);
+}
 void HeapSort(int* a, int n)
 {
 	// 降序，建小堆
@@ -9,23 +42,23 @@ void HeapSort(int* a, int n)
 		AdjustUp(a, i);
 	}*/
 
-	for (int i = n-1; i > 0; i--)
+	/*for (int i = 1; i < n; i++)
 	{
 		AdjustUp(a, i);
+	}*/
+
+	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
+	{
+		AdjustDown(a, n, i);
 	}
 
-	//for (int i = (n - 1 - 1) / 2; i >= 0; i--)
-	//{
-	//	AdjustDown(a, n, i);
-	//}
-
-	//int end = n - 1;
-	//while (end > 0)
-	//{
-	//	swap(&a[0], &a[end]);
-	//	AdjustDown(a, end, 0);
-	//	--end;
-	//}
+	int end = n - 1;
+	while (end > 0)
+	{
+		swap(&a[0], &a[end]);
+		AdjustDown(a, end, 0);
+		--end;
+	}
 }
 
 void TestHeap2()
@@ -36,7 +69,9 @@ void TestHeap2()
 
 int main()
 {
-	TestHeap2();
+	TestHeap1();
+
+	//TestHeap2();
 
 	return 0;
 }

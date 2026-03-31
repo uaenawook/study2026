@@ -34,7 +34,7 @@ void AdjustUp(HPDataType* a, int child)
 	{
 		if (a[child] < a[parent])
 		{
-			swap(&a[child - 1], &a[parent]);
+			swap(&a[child], &a[parent]);
 			child = parent;
 			parent = (child - 1) / 2;
 		}
@@ -54,19 +54,21 @@ void HPPush(HP* php, HPDataType x)
 
 	if (php->size == php->capacity)
 	{
-		int newCapacity = 0 ? 4 : php->capacity * 2;
-		HPDataType* newNode = (HPDataType*)realloc(php->a, php->capacity * sizeof(HPDataType));
+		int newCapacity = php->capacity == 0 ? 4 : php->capacity * 2;
+		HPDataType* newNode = (HPDataType*)realloc(php->a, newCapacity * sizeof(HPDataType));
 		if (newNode == NULL)
 		{
 			perror("ralloc fail!\n");
 			exit(-1);
 		}
+		php->a = newNode;
+		php->capacity = newCapacity;
 	}
 	php->a[php->size] = x;
 	php->size++;
 
 	//插入后调整，假设向上调整为小根堆
-	AdjustUp(php->a,php->size-1);
+	AdjustUp(php->a , php->size - 1);
 }
 //向下调整
 void AdjustDown(HPDataType* a, int n, int parent)
