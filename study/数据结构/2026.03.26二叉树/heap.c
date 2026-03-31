@@ -24,7 +24,7 @@ void swap(HPDataType* x, HPDataType* y)
 	*x = *y;
 	*y = tmp;
 }
-//向下调整
+//向下调整1
 
 void AdjustUp(HPDataType* a, int child)
 {
