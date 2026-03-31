@@ -24,6 +24,8 @@ void swap(HPDataType* x, HPDataType* y)
 	*x = *y;
 	*y = tmp;
 }
+//向下调整
+
 void AdjustUp(HPDataType* a, int child)
 {
 	//child 为size的前一个，size 是尾元素的下一个，
