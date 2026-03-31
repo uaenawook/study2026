@@ -1,0 +1,37 @@
+pyinstaller --noconsole --onefile --icon=logo.ico --add-data "logo.ico;." --name "IU时间大师0.20v" IU_FinalManager.py
+
+
+
+打开原生终端：
+请进入存放 IU_Pro_Tray.py 和 logo.ico 的文件夹。
+点击文件夹窗口顶部显示路径的地址栏，把里面的字全部删掉，输入 cmd 然后按回车键。
+这会在当前目录下直接弹出一个黑色的命令行窗口。
+
+执行核心命令：
+在黑窗口中，复制并粘贴下面这行原生命令，然后按回车：
+python -m PyInstaller --clean -F -w -i logo.ico IU_Pro_Tray.py
+（严谨提示：这里我为您加上了 python -m 前缀，这是为了绝对防止 Windows 环境变量未配置彻底而导致找不到命令的隐患，确保万无一失。）
+
+获取成果：
+静静等待屏幕上的代码滚完，只要最后显示 completed successfully，您心心念念的 dist 文件夹就会立刻出现在当前目录里。
+
+第一步：升级包管理器（严谨的底层防错准备）
+
+DOS
+python -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+第二步：安装图像处理环境（用于解析您的 logo.ico）
+
+DOS
+python -m pip install Pillow -i https://pypi.tuna.tsinghua.edu.cn/simple
+第三步：安装系统托盘环境（用于右下角后台驻留）
+
+DOS
+python -m pip install pystray -i https://pypi.tuna.tsinghua.edu.cn/simple
+第四步：安装核心编译打包引擎
+
+DOS
+python -m pip install pyinstaller -i https://pypi.tuna.tsinghua.edu.cn/simple
+第五步：执行最终的独立文件编译打包（最关键的一步）
+
+DOS
+python -m PyInstaller --clean -F -w -i logo.ico IU_Pro_Tray.py

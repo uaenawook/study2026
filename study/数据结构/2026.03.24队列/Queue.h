@@ -38,6 +38,6 @@ QDataType QueueBack(Queue* pq);
 
 //判空
 bool QueueEmpty(Queue* pq);
-//
+//数据个数
 int QueueSize(Queue* pq);
 
