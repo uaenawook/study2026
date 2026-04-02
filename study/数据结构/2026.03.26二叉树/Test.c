@@ -11,6 +11,20 @@ void TestHeap1()
 	{
 		HPPush(&hp, a[i]);
 	}
+	for (int i = 0; i < hp.size; i++)
+	{
+		printf("%d ", hp.a[i]);
+	}
+	printf("\n");
+
+	HPPop(&hp);
+	for (int i = 0; i < hp.size; i++)
+	{
+		printf("%d ", hp.a[i]);
+	}
+	printf("\n");
+
+
 
 	//int i = 0;
 	//while (!HPEmpty(&hp))

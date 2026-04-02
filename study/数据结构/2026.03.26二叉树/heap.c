@@ -46,6 +46,26 @@ void AdjustUp(HPDataType* a, int child)
 	}
 }
 
+//重写的第二遍
+void AdjustUp1(HPDataType* a, int child)
+{
+	assert(a);
+
+	int parent = (child - 1) / 2;
+	while (child > 0)
+	{
+		if (a[child] < a[parent])
+		{
+			swap(&a[child], &a[parent]);
+			child = parent;
+			parent = (child - 1) / 2;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
 //插入
 void HPPush(HP* php, HPDataType x)
 {
@@ -68,7 +88,7 @@ void HPPush(HP* php, HPDataType x)
 	php->size++;
 
 	//插入后调整，假设向上调整为小根堆
-	AdjustUp(php->a , php->size - 1);
+	AdjustUp1(php->a , php->size - 1);
 }
 //向下调整
 void AdjustDown(HPDataType* a, int n, int parent)
@@ -96,6 +116,32 @@ void AdjustDown(HPDataType* a, int n, int parent)
 	}
 
 }
+
+void AdjustDown2(HPDataType* a, int size, int parent)
+{
+	//假设左孩子小
+	int child = parent * 2 + 1;
+	//如果孩子<size则说明,还能继续调整
+	while (child < size)
+	{
+		if (child + 1 < size && a[child+1] < a[child])
+		{
+			child++;
+		}
+		//如果父亲大于孩子则交换，因为是小根堆，让小的当父亲
+		if (a[parent] > a[child])
+		{
+			swap(&a[parent], &a[child]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			//此时父亲比孩子小，则不用调整
+			break;
+		}
+	}
+}
 //删除
 void HPPop(HP* php)
 {
@@ -106,7 +152,7 @@ void HPPop(HP* php)
 	swap(&php->a[0], &php->a[php->size - 1]);
 	php->size--;
 
-	AdjustDown(php->a, php->size, 0);
+	AdjustDown2(php->a, php->size, 0);
 
 
 }
