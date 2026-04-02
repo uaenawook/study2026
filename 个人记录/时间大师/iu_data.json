@@ -8,6 +8,33 @@
             "continuous": true,
             "ring_count": 1,
             "active": false
+        },
+        {
+            "id": 1775034289.2597983,
+            "title": "学习C++",
+            "time": "17:49:48",
+            "sound": "清晨节奏",
+            "continuous": true,
+            "ring_count": 1,
+            "active": false
+        },
+        {
+            "id": 1775097229.2488542,
+            "title": "学习C++",
+            "time": "10:38:48",
+            "sound": "清晨节奏",
+            "continuous": true,
+            "ring_count": 1,
+            "active": false
+        },
+        {
+            "id": 1775105925.558967,
+            "title": "学习C++",
+            "time": "13:23:44",
+            "sound": "清晨节奏",
+            "continuous": true,
+            "ring_count": 1,
+            "active": false
         }
     ],
     "tasks": [
@@ -584,7 +611,7 @@
         {
             "id": 1774883220.5994384,
             "text": "编程学习",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-30"
         },
         {
@@ -608,13 +635,13 @@
         {
             "id": 1774964075.7353103,
             "text": "Gitee维护",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-31"
         },
         {
             "id": 1774964076.024895,
             "text": "LeetCode签到",
-            "completed": false,
+            "completed": true,
             "date": "2026-03-31"
         },
         {
@@ -628,6 +655,36 @@
             "text": "多邻国打卡",
             "completed": true,
             "date": "2026-03-31"
+        },
+        {
+            "id": 1774977507.1052172,
+            "text": "重新写堆的向上向下调整",
+            "completed": false,
+            "date": "2026-04-01"
+        },
+        {
+            "id": 1775082180.4035084,
+            "text": "编程学习",
+            "completed": true,
+            "date": "2026-04-01"
+        },
+        {
+            "id": 1775082193.4413147,
+            "text": "重新写堆的向上向下调整",
+            "completed": true,
+            "date": "2026-04-02"
+        },
+        {
+            "id": 1775108513.1305444,
+            "text": "编程学习",
+            "completed": true,
+            "date": "2026-04-02"
+        },
+        {
+            "id": 1775108514.6027355,
+            "text": "英语学习",
+            "completed": true,
+            "date": "2026-04-02"
         }
     ],
     "motto": "千里之行，始于足下。王总，今日事今日毕！",
