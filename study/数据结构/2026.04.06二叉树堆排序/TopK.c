@@ -19,7 +19,7 @@ void PrintTopK(int* a, int n, int k)
 	for (int i = k; i < n; i++)
 	{
 		// 比较
-		if (a[i] > HeapTop(&hp))
+		if (a[i] < HeapTop(&hp))
 		{
 			// 插入调整
 			hp.a[0] = a[i];

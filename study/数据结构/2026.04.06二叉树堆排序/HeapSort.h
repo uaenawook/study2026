@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<string.h>
-#include <time.h> 
+
 
 
 typedef int HSDataType;
@@ -35,3 +35,5 @@ int HeapEmpty(Heap* php);
 
 
 void HeapSort(int* a, int n);
+
+//void PrintTopK(int* a, int n, int k);
