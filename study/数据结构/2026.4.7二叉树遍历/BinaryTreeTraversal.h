@@ -33,3 +33,10 @@ int BinaryTreeLeafSize(BTNode* root);
 int BinaryTreeLevelKSize(BTNode* root, int k);
 // 二叉树查找值为x的结点
 BTNode* BinaryTreeFind(BTNode* root, BTDataType x);
+
+// 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
+BTNode* BinaryTreeCreate(char* a, int* pi);
+// 二叉树销毁
+void BinaryTreeDestory(BTNode* root);
+// 判断二叉树是否是完全二叉树
+int BinaryTreeComplete(BTNode* root);

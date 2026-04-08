@@ -17,7 +17,7 @@ BTNode* CreatBinaryTree()
 	node2->left = node3;
 	node4->left = node5;
 	node4->right = node6;
-	node5->right = node7;
+	node2->right = node7;
 
 	return node1;
 }
@@ -56,6 +56,14 @@ int main()
 	else {
 		printf("找到了：%d\n", find->data);
 	}
+
+
+	char a[] = { "ABD##E#H##CF##G##" };
+	int i = 0;
+	BinaryTreeCreate(&a,&i);
+
+	printf("判断是否是完全二叉树0为假，1为真：%d",BinaryTreeComplete(root));
+	printf("\n");
 
 	return 0;
 }

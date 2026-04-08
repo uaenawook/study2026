@@ -165,3 +165,92 @@ BTNode* BinaryTreeFind(BTNode* root, BTDataType x)
 		return right;
 	return NULL;
 }
+
+
+// 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
+BTNode* _BinaryTreeCreate(char* a, int* pi)
+{
+	if (a[*pi] == '#')
+	{
+		(*pi)++;
+		return NULL;
+	}
+	BTNode* root = (BTNode*)malloc(sizeof(BTNode));
+	root->data = a[(*pi)++];
+	root->left = _BinaryTreeCreate(a, pi);
+	root->right = _BinaryTreeCreate(a, pi);
+	return root;
+
+
+}
+void charPreOrder(BTNode* root)
+{
+	if (root == NULL)
+	{
+		//printf("NULL ");
+		return;
+	}
+
+	printf("%c ", root->data);
+	charPreOrder(root->left);
+	charPreOrder(root->right);
+}
+BTNode* BinaryTreeCreate(char* a, int* pi)
+{
+
+	*pi = 0;
+	BTNode* root = _BinaryTreeCreate(a, pi);
+	printf("a的前序遍历：");
+	charPreOrder(root);
+	printf("\n");
+	return root;
+	
+}
+// 二叉树销毁
+void BinaryTreeDestory(BTNode* root)
+{
+	if (root == NULL)
+		return;
+	BinaryTreeDestory(root->left);
+	BinaryTreeDestory(root->right);
+	free(root);
+}
+// 判断二叉树是否是完全二叉树
+int BinaryTreeComplete(BTNode* root)
+{
+	// 利用栈 入根节点 根节点出带入子节点，
+	//				如果出到NULL，后面还有非空则不是完全二叉树
+	//				遇到空，后面全是空，栈出空了，则是完全二叉树
+	Queue q;
+	QueueInit(&q);
+	QueuePush(&q, root);
+	while (!QueueEmpty(&q))
+	{
+		//出队列
+		BTNode* cur = QueueFront(&q);
+		QueuePop(&q);
+		// 如果出到空，检查后面是否有非空，非空返回0 ，全空返回1
+		if (cur == NULL)
+		{
+			while (!QueueEmpty(&q))
+			{
+				BTNode* cur = QueueFront(&q);
+				QueuePop(&q);
+				if (cur != NULL)
+				{
+					QueueDestroy(&q);
+					return 0;
+
+				}
+			}
+			QueueDestroy(&q);
+			return 1;
+		}
+
+		//代入孩子
+		QueuePush(&q, cur->left);
+		QueuePush(&q, cur->right);
+	}
+	QueueDestroy(&q);
+	return 1;
+}
