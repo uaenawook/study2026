@@ -121,7 +121,7 @@ void InsertionSort(int* a, int n)
 	}
 }
 
-//Ï£¶ûÅÅĞò
+//Ï£¶ûÅÅĞò-ÔÚµÚÒ»´Î»ù´¡ÉÏĞŞ¸Ä
 void ShellSort(int* a, int n)
 {
 	int gap = n;
@@ -140,7 +140,12 @@ void ShellSort(int* a, int n)
 			a[cur] = tmp;
 		}
 	}
-	/*for (int gap = n/3+1; gap > 0; (gap/=3)+1)
+}
+
+//Ï£¶ûÅÅĞò - µÚÒ»´ÎĞ´
+void ShellSort1(int* a, int n)
+{
+	for (int gap = n/3+1; gap > 0; (gap/=3)+1)
 	{
 		for (int i = gap; i < n; i++)
 		{
@@ -160,5 +165,5 @@ void ShellSort(int* a, int n)
 			}
 			a[cur] = tmp;
 		}
-	}*/
+	}
 }
