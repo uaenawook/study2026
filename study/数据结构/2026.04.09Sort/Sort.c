@@ -62,7 +62,7 @@ void SelectionSort(int* a, int n)
 }
 
 // 选择排序--一次排序选择一个最小的，一个最大的
-void SelectionSort2(int* a, int n)
+void SelectionSort2(int* a, int n)// 有问题，需重写
 {
 	int mini = 0;
 	int maxi = 0;
@@ -87,4 +87,78 @@ void SelectionSort2(int* a, int n)
 		end--;
 	}
 
+}
+
+
+//插入排序
+void InsertionSort(int* a, int n)
+{
+	// 遍历一遍数组，从下标1开始，跟前一个比较
+	// 记录i的值为tmp，cur = i;
+	// 用cur向前遍历比较，前一个值比cur大，则让cur的值cur-1的值，cur--;
+	// 否则跳出循环
+	// 把tmp的值插入到cur的位置
+	// i继续往下走
+
+	
+	for (int i = 1; i < n; i++)		//遍历数组，因为当前值与前一个比较，所以从1遍历到n-1
+	{
+		int tmp = a[i];
+		int cur = i;
+		while (cur > 0)				// cur跟前一个比，cur最后一次比较必须是1，前一个是0
+		{
+			if (a[cur-1] > tmp)		// 如果前一个比tmp大，则让这个值往后移动
+			{
+				a[cur] = a[cur-1];
+				cur--;
+			}
+			else					//否则就是找到了比tmp小的值
+			{
+				break;
+			}
+		}
+		a[cur] = tmp;				// cur的前一个比tmp小，当前值又被挪到了后面，tmp插入在这
+	}
+}
+
+//希尔排序
+void ShellSort(int* a, int n)
+{
+	int gap = n;
+	while(gap>1)
+	{
+		gap = gap / 3 + 1;
+		for (int i = gap; i < n; i++)
+		{
+			int tmp = a[i];
+			int cur = i;
+			while (cur >=gap && a[cur - gap] > tmp)
+			{
+				a[cur] = a[cur - gap];
+				cur -= gap;
+			}
+			a[cur] = tmp;
+		}
+	}
+	/*for (int gap = n/3+1; gap > 0; (gap/=3)+1)
+	{
+		for (int i = gap; i < n; i++)
+		{
+			int tmp = a[i];
+			int cur = i;
+			while (cur > 0 && cur-gap>=0)
+			{
+				if (a[cur - gap] > tmp)
+				{
+					a[cur] = a[cur - gap];
+					cur-=gap;
+				}
+				else
+				{
+					break;
+				}
+			}
+			a[cur] = tmp;
+		}
+	}*/
 }

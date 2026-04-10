@@ -11,3 +11,9 @@ void BubbleSort(int* a, int n);
 
 //—°‘Ò≈≈–Ú
 void SelectionSort(int* a, int n);
+
+//≤Â»Î≈≈–Ú
+void InsertionSort(int* a, int n);
+
+//œ£∂˚≈≈–Ú
+void ShellSort(int* a, int n);
