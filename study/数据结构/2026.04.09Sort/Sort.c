@@ -183,13 +183,13 @@ void QuickSort(int* a, int left, int right)
 	while (l < r)
 	{
 		// ÓÒ±ßÕÒ±ÈkeyÐ¡
-		while(l < r && a[r] > a[key])
+		while(l < r && a[r] >= a[key])
 		{
 				r--;
 		}
 
 		// ×ó±ßÕÒ´ó
-		while (l < r && a[l] < a[key])
+		while (l < r && a[l] <= a[key])
 		{
 				l++;
 		}
