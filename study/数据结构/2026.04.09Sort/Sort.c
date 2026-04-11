@@ -167,3 +167,41 @@ void ShellSort1(int* a, int n)
 		}
 	}
 }
+
+
+// 快速排序-升序
+// 遇到的问题-找大小的时候必须判断=，让等于key的值留在原地，不然左右都找到==key，进行交换会死循环
+void QuickSort(int* a, int left, int right)
+{
+	// 递归返回条件
+	if (left >= right)
+		return;
+	// 左边做k，右边先走
+	int key = left;
+	int l = left;
+	int r = right;
+	while (l < r)
+	{
+		// 右边找比key小
+		while(l < r && a[r] > a[key])
+		{
+				r--;
+		}
+
+		// 左边找大
+		while (l < r && a[l] < a[key])
+		{
+				l++;
+		}
+
+		//找到了交换
+		swap(&a[l], &a[r]);
+
+	}
+
+	// 一趟走完，交换key
+	swap(&a[key], &a[l]);
+	key = l;
+	QuickSort(a, left, key - 1);
+	QuickSort(a, key+1,right);
+}

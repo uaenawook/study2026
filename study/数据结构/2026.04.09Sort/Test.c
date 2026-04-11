@@ -46,10 +46,23 @@ void TestShellSort()
 
 }
 
+// 测试快速排序
+TestQuickSort()
+{
+	// 正常
+	//int a[] = { 6,2,9,7,8,4,5,1,3,0 };
+	// 数据变多，有重复就死循环
+	int a[] = { 6,2,9,7,8,4,5,1,3,0,2,9,7,8,4,5,1,3,0 };
+	int n = sizeof(a) / sizeof(int);
+	printf("快速排序：");
+	PrintfArr(a, n);
+	QuickSort (a,0, n-1);
+	PrintfArr(a, n);
+}
 void TestOP()
 {
 	srand(time(0));
-	const int N = 100000;
+	const int N = 1000000;
 	int* a1 = (int*)malloc(sizeof(int) * N);
 	int* a2 = (int*)malloc(sizeof(int) * N);
 	int* a3 = (int*)malloc(sizeof(int) * N);
@@ -86,7 +99,7 @@ void TestOP()
 	int end4 = clock();
 
 	int begin5 = clock();
-	//QuickSort(a5, 0, N - 1);
+	QuickSort(a5, 0, N - 1);
 	int end5 = clock();
 
 	int begin6 = clock();
@@ -103,6 +116,7 @@ void TestOP()
 	printf("SelectSort:%d\n", end3 - begin3);
 	printf("HeapSort:%d\n", end4 - begin4);
 	printf("QuickSort:%d\n", end5 - begin5);
+	printf("希尔排序："); PrintfArr(a5, 15);
 	printf("MergeSort:%d\n", end6 - begin6);
 	printf("BubbleSort:%d\n", end7 - begin7);
 
@@ -122,11 +136,14 @@ int main()
 	// 测试选择排序
 	TestSelectionSort();
 
-	//测试插入排序
+	// 测试插入排序
 	TestInsertionSort();
 
-	//测试希尔排序
+	// 测试希尔排序
 	TestShellSort();
+
+	// 测试快速排序
+	TestQuickSort();
 
 	TestOP();
 
