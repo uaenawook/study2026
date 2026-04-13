@@ -1,5 +1,5 @@
 #include"Sort.h"
-
+#include"Stack.h"
 
 //打印数组
 void PrintfArr(int* a, int n)
@@ -168,7 +168,104 @@ void ShellSort1(int* a, int n)
 	}
 }
 
+// 三数取中
+int GetMidi(int* a, int left, int right)
+{
+	int midi = (left + right) / 2;
+	if (a[left] < a[midi] && a[midi] < a[right])
+		return midi;
+	else if (a[left] > a[midi] && a[midi] > a[right])
+		return midi;
+	else if (a[midi] < a[right] && a[right] < a[left])
+		return right;
+	else if (a[midi] > a[right] && a[right] > a[left])
+		return right;
+	else
+		return left;
 
+	//int midi = (left + right) / 2;
+	//if (a[left] < a[midi])
+	//{
+	//	if (a[midi] < a[right])
+	//		return midi;
+	//	else if (a[right] > a[left])
+	//		return right;
+	//	else
+	//		return left;
+	//}
+	//else //a[left] >= a[midi]
+	//{
+	//	if (a[midi] > a[right])
+	//		return midi;
+	//	else if (a[left] < a[right])
+	//		return left;
+	//	else
+	//		return right;
+	//}
+}
+
+
+int PartSort1(int* a, int left, int right)
+{
+	//三数取中
+	int midi = GetMidi(a, left, right);
+	swap(&a[left], &a[midi]);
+
+	// 左边做k，右边先走
+	int keyi = left;
+	//int keyi = left;
+	int begin = left;
+	int end = right;
+	while (begin < end)
+	{
+		// 右边找比key小
+		while (begin < end && a[end] >= a[keyi])
+		{
+			end--;
+		}
+
+		// 左边找大
+		while (begin < end && a[begin] <= a[keyi])
+		{
+			begin++;
+		}
+
+		//找到了交换
+		swap(&a[begin], &a[end]);
+
+	}
+
+	// 一趟走完，交换key
+	swap(&a[keyi], &a[begin]);
+	keyi = begin;
+
+	return keyi;
+}
+
+int PartSort2(int* a, int left, int right)
+{
+
+	//三数取中
+	int midi = GetMidi(a, left, right);
+	swap(&a[left], &a[midi]);
+
+	int keyi = left;
+	int prev = left, cur = prev+1;
+	while (cur <= right)
+	{
+		// 为了防止自己和自己交换
+		if (a[cur] < a[keyi]&& ++prev != cur )
+			swap(&a[prev], &a[cur]);
+		cur++;
+		// 正常版本
+		/*if (a[cur] < a[keyi])
+			swap(&a[++prev], &a[cur]);
+		cur++;*/
+	}
+	swap(&a[keyi], &a[prev]);
+	keyi = prev;
+	return keyi;
+}
 // 快速排序-升序
 // 遇到的问题-找大小的时候必须判断=，让等于key的值留在原地，不然左右都找到==key，进行交换会死循环
 void QuickSort(int* a, int left, int right)
@@ -176,32 +273,55 @@ void QuickSort(int* a, int left, int right)
 	// 递归返回条件
 	if (left >= right)
 		return;
-	// 左边做k，右边先走
-	int key = left;
-	int l = left;
-	int r = right;
-	while (l < r)
+	if ((right - left + 1) < 10)
 	{
-		// 右边找比key小
-		while(l < r && a[r] >= a[key])
-		{
-				r--;
-		}
+		InsertionSort(a + left, right -left + 1);
+	}
+	else
+	{
+		int keyi = PartSort1(a, left, right);
+		QuickSort(a, left, keyi - 1);
+		QuickSort(a, keyi + 1, right);
+	}
 
-		// 左边找大
-		while (l < r && a[l] <= a[key])
-		{
-				l++;
-		}
+}
 
-		//找到了交换
-		swap(&a[l], &a[r]);
+// 快排非递归
+void QuickSortNonR(int* a, int left, int right)
+{
+	//用栈实现非递归，入左右下标，需要交换时取出，交换完算出新的区间入栈，栈为空则结束
+	ST st;
+	STInit(&st);
+	STPush(&st, right); // 先入右再入左，取的时候先取到左
+	STPush(&st, left);
+	while (!STEmpty(&st))
+	{
+
+		int begin = STTop(&st);
+		STPop(&st);
+
+		int end = STTop(&st);
+		STPop(&st);
+
+		int keyi = PartSort2(a, begin, end);
+
+		//[begin1,keyi-1] keyi [keyi+1,end1]
+		// 先入有区间，和右区间的右值
+		if ((end - keyi)>1)
+		{
+			STPush(&st, end);
+			STPush(&st, keyi + 1);
+		}
+		if ((keyi - begin) >1)
+		{
+			STPush(&st, keyi - 1);
+			STPush(&st, begin);
+		}
 
 	}
 
-	// 一趟走完，交换key
-	swap(&a[key], &a[l]);
-	key = l;
-	QuickSort(a, left, key - 1);
-	QuickSort(a, key+1,right);
+	
+
+	STDestroy(&st);
+
 }
