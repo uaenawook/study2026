@@ -6,6 +6,10 @@
 // 打印数组
 void PrintfArr(int* a, int n);
 
+// 堆排序
+void AdjustDown(int* a, int n, int parent);
+void HeapSort(int* a, int n);
+
 // 冒泡排序
 void BubbleSort(int* a, int n);
 
@@ -24,3 +28,13 @@ void QuickSort(int* a, int left, int right);
 
 // 快速排序非递归
 void QuickSortNonR(int* a, int left, int right);
+
+
+// 归并排序
+void MergeSort(int* a, int n);
+
+// 归并排序非递归
+void MergeSortNonR(int* a, int n);
+
+// 计数排序
+void CountSort(int*a, int n);

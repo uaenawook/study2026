@@ -1,5 +1,6 @@
 #include"Sort.h"
 
+
 // ≤‚ ‘√∞≈›≈≈–Ú
 void TestBubbleSort()
 {
@@ -56,9 +57,24 @@ TestQuickSort()
 	int n = sizeof(a) / sizeof(int);
 	printf("øÏÀŸ≈≈–Ú£∫");
 	PrintfArr(a, n);
-	QuickSort (a,0, n-1);
+	QuickSort(a,0, n-1);
+	//QuickSortNonR(a,0, n-1);
 	PrintfArr(a, n);
 }
+
+// ≤‚ ‘πÈ≤¢≈≈–Ú
+void TestMergeSort()
+{
+	//int a[] = { 6,2,9,7,8,4,5,1,3,0};
+	int a[] = { 6,2,9,7,8,4,5,1,3,0};
+	int n = sizeof(a) / sizeof(int);
+	printf("πÈ≤¢≈≈–Ú£∫");
+	PrintfArr(a, n);
+	//MergeSort(a, n);
+	MergeSortNonR(a, n);
+	PrintfArr(a, n);
+}
+
 void TestOP()
 {
 	srand(time(0));
@@ -95,7 +111,7 @@ void TestOP()
 	int end3 = clock();
 
 	int begin4 = clock();
-	//HeapSort(a4, N);
+	HeapSort(a4, N);
 	int end4 = clock();
 
 	int begin5 = clock();
@@ -106,6 +122,7 @@ void TestOP()
 
 	int begin6 = clock();
 	//MergeSort(a6, N);
+	MergeSortNonR(a6, N);
 	int end6 = clock();
 
 	int begin7 = clock();
@@ -114,12 +131,14 @@ void TestOP()
 
 	printf("InsertSort:%d\n", end1 - begin1);
 	printf("ShellSort:%d\n", end2 - begin2);
-	printf("œ£∂˚≈≈–Ú£∫");PrintfArr(a2, 15);
+	//printf("œ£∂˚≈≈–Ú£∫");PrintfArr(a2, 15);
 	printf("SelectSort:%d\n", end3 - begin3);
 	printf("HeapSort:%d\n", end4 - begin4);
+	//printf("∂—≈≈–Ú£∫"); PrintfArr(a4, 15);
 	printf("QuickSort:%d\n", end5 - begin5);
-	printf("œ£∂˚≈≈–Ú£∫"); PrintfArr(a5, 15);
+	printf("øÏÀŸ≈≈–Ú£∫"); PrintfArr(a5, 15);
 	printf("MergeSort:%d\n", end6 - begin6);
+	printf("πÈ≤¢≈≈–Ú£∫"); PrintfArr(a6, 15);
 	printf("BubbleSort:%d\n", end7 - begin7);
 
 	free(a1);
@@ -146,6 +165,9 @@ int main()
 
 	// ≤‚ ‘øÏÀŸ≈≈–Ú
 	TestQuickSort();
+
+	// ≤‚ ‘πÈ≤¢≈≈–Ú
+	TestMergeSort();
 
 	TestOP();
 

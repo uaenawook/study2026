@@ -17,6 +17,53 @@ void swap(int* x, int* y)
 	*y = tmp;
 }
 
+
+
+// 向下调整
+void AdjustDown(int* a, int n, int parent)
+{
+	//大根堆，保持堆顶是最大值
+	//找出大的孩子交换
+	int child = parent * 2 + 1;
+	//调整，结束条件1.孩子比父亲小。 2. 调到底了
+	while (child < n)
+	{
+		//必须判断有没有 右孩子，如没有右孩子则a[child+1]会越界访问
+		if (child + 1 < n && a[child + 1] > a[child])
+			child++;
+
+		//交换
+		if (a[child] > a[parent])
+		{
+			swap(&a[child], &a[parent]);
+			parent = child;
+			child = parent * 2 + 1;
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+//堆排序
+void HeapSort(int* a, int n)
+{
+	//建堆
+	for (int i = (n - 1 - 1) / 2; i >= 0; i--)
+	{
+		AdjustDown(a, n, i);
+	}
+
+	//排序
+	for (int i = n - 1; i > 0; i--)
+	{
+		swap(&a[0], &a[i]);
+		AdjustDown(a, i, 0);
+	}
+}
+
+
 //冒泡排序
 void BubbleSort(int* a, int n)
 {
@@ -273,6 +320,7 @@ void QuickSort(int* a, int left, int right)
 	// 递归返回条件
 	if (left >= right)
 		return;
+	//小区间优化
 	if ((right - left + 1) < 10)
 	{
 		InsertionSort(a + left, right -left + 1);
@@ -294,6 +342,7 @@ void QuickSortNonR(int* a, int left, int right)
 	STInit(&st);
 	STPush(&st, right); // 先入右再入左，取的时候先取到左
 	STPush(&st, left);
+
 	while (!STEmpty(&st))
 	{
 
@@ -303,25 +352,167 @@ void QuickSortNonR(int* a, int left, int right)
 		int end = STTop(&st);
 		STPop(&st);
 
-		int keyi = PartSort2(a, begin, end);
+
+		int keyi = PartSort1(a, begin, end);
 
 		//[begin1,keyi-1] keyi [keyi+1,end1]
 		// 先入有区间，和右区间的右值
-		if ((end - keyi)>1)
+		if ((end - keyi) > 1)
 		{
 			STPush(&st, end);
 			STPush(&st, keyi + 1);
 		}
-		if ((keyi - begin) >1)
+		if ((keyi - begin) > 1)
 		{
 			STPush(&st, keyi - 1);
 			STPush(&st, begin);
 		}
-
 	}
 
 	
 
 	STDestroy(&st);
+
+}
+
+// 比较大小
+void compare(int* a, int* b)
+{
+	if (*a > *b)
+	{
+		swap(a, b);
+	}
+}
+
+void _MergeSort(int* a,int*newArr, int left,int right)
+{
+	// 归并最小条件
+	if (left >= right)
+		return;
+	//if (left + 1 == right)
+	//{
+	//	compare(&a[left], &a[right]);
+	//	return;
+	//}
+
+	// 分割
+	int midi = (left + right) / 2;
+	//[left,midi][midi,right]
+	_MergeSort(a, newArr, left, midi);
+	_MergeSort(a, newArr, midi+1,right);
+
+	//归并
+	int j = left; // newArr的下标
+	int i1 = left;
+	int i2 = midi + 1;
+	while (i1 <= midi && i2 <= right)
+	{
+		if (a[i1] <= a[i2])
+		{
+			newArr[j++] = a[i1++];
+		}
+		else
+		{
+			newArr[j++] = a[i2++];
+		}
+	}
+	while (i1 <= midi)
+	{
+		newArr[j++] = a[i1++];
+	}
+	while (i2 <= right)
+	{
+		newArr[j++] = a[i2++];
+	}
+
+	// 覆盖回原数组
+	while (j-- > left)
+	{
+		a[j] = newArr[j];
+	}
+}
+
+// 归并排序
+void MergeSort(int* a, int n)
+{
+	int* newArr = (int*)malloc(sizeof(int) * n);
+	if (newArr == NULL)
+	{
+		perror("malloc fail!\n");
+		exit(-1);
+	}
+	_MergeSort(a, newArr, 0, n - 1);
+
+	free(newArr);
+	newArr = NULL;
+}
+
+// 归并排序非递归
+void MergeSortNonR(int* a, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+
+	// 归并
+	int gap = 1;
+	while(gap < n)
+	{
+		for (int i = 0; i < n; i += gap * 2)
+		{
+			int begin1 = i;
+			int end1 = i + gap - 1;
+			int begin2 = i + gap;
+			int end2 = i + gap * 2 - 1;
+			//printf("[%d,%d][%d,%d] ", begin1, end1, begin2, end2);
+			int j = i;
+			if (begin2 >= n)
+				break;
+
+			if (end2 >= n)
+				end2 = n-1;
+
+			while (begin1 <= end1 && begin2 <= end2)
+			{
+				if (a[begin1] <= a[begin2])
+				{
+					tmp[j++] = a[begin1++];
+				}
+				else
+				{
+					tmp[j++] = a[begin2++];
+				}
+			}
+			while (begin1 <= end1)
+			{
+				tmp[j++] = a[begin1++];
+			}
+			while (begin2 <= end2)
+			{
+				tmp[j++] = a[begin2++];
+			}
+
+			//// gap = 1
+			//if (a[i] > a[i + 1])
+			//{
+			//	tmp[i] = a[i+1];
+			//	tmp[i + 1] = a[i];
+			//}
+			//memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+			// 覆盖原数组
+			int k = i;
+			while (k <= end2)
+			{
+				a[k] = tmp[k++];
+			}
+		}
+		//printf("\n");
+
+		gap *=2 ;
+	}
+
+}
+
+// 计数排序
+void CountSort(int*a, int n)
+{
 
 }
