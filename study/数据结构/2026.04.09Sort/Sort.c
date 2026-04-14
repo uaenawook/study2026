@@ -514,5 +514,37 @@ void MergeSortNonR(int* a, int n)
 // 计数排序
 void CountSort(int*a, int n)
 {
-
+	int n1 = n;
+	int max = a[0];
+	int min = a[0];
+	while (n1--)
+	{
+		if (a[n1] > max)
+			max = a[n1];
+		if (a[n1] < min)
+			min = a[n1];
+	}
+	//max = max + 1;
+	int tmpN = max - min + 1;
+	printf("数组大小：%d\n", tmpN);
+	int* tmp = (int*)calloc(tmpN, sizeof(int));
+	if (tmp == NULL)
+	{
+		perror("clloc fail\n");
+		exit(-1);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		tmp[a[i]-min]++;
+	}
+	int j = 0;
+	for (int i = 0; i < tmpN; i++)
+	{
+		while (tmp[i] != 0)
+		{
+			a[j++] = i+min;
+			tmp[i]--;
+		}
+	}
+	free(tmp);
 }

@@ -75,6 +75,18 @@ void TestMergeSort()
 	PrintfArr(a, n);
 }
 
+// ≤‚ ‘º∆ ˝≈≈–Ú
+void TestCountSort()
+{
+	//int a[] = { 6,2,9,7,8,4,5,1,3,0 };
+	int a[] = { 106,102,109,107,108,104,105,101,103,100 };
+	int n = sizeof(a) / sizeof(int);
+	printf("º∆ ˝≈≈–Ú£∫");
+	PrintfArr(a, n);
+	CountSort(a, n);
+	PrintfArr(a, n);
+}
+
 void TestOP()
 {
 	srand(time(0));
@@ -168,6 +180,9 @@ int main()
 
 	// ≤‚ ‘πÈ≤¢≈≈–Ú
 	TestMergeSort();
+
+	// ≤‚ ‘º∆ ˝≈≈–Ú
+	TestCountSort();
 
 	TestOP();
 
