@@ -66,19 +66,19 @@ void Date::Init2(int year, int month, int day)
 	_day = day;
 }
 
-int main()
-{
-	Date d2;
-	Date d3;
-
-	d2.Init(2024, 7, 9);
-
-	struct Date d1;
-
-	ListCPP node;
-
-	//Date::_year = 2024; // 类的声明不能被修改
-
-
-	return 0;
-}
+//int main()
+//{
+//	Date d2;
+//	Date d3;
+//
+//	d2.Init(2024, 7, 9);
+//
+//	struct Date d1;
+//
+//	ListCPP node;
+//
+//	//Date::_year = 2024; // 类的声明不能被修改
+//
+//
+//	return 0;
+//}
