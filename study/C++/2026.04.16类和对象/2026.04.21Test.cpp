@@ -140,31 +140,122 @@ using namespace std;
 //	return 0;
 //}
 
+//#include<iostream>
+//using namespace std;
+//class A
+//{
+//private:
+//	static int _k;
+//	//int _h = 1;
+//public:
+//	class B // B默认就是A的友元​
+//	{
+//	public:
+//		void foo(const A& a)
+//		{
+//			cout << _k << endl; //OK
+//			//cout << a._h << endl; //OK
+//		}
+//		int _b1;
+//	};
+//};
+//int A::_k = 1;
+//int main()
+//{
+//	cout << sizeof(A) << endl;
+//	//A::B b;
+//	//A aa;
+//	//b.foo(aa);
+//	return 0;
+//}
+
+
 #include<iostream>
 using namespace std;
 class A
 {
-private:
-	static int _k;
-	//int _h = 1;
 public:
-	class B // B默认就是A的友元​
+	A(int a = 0) // 默认构造函数 Default ctor
+		:_a1(a)
 	{
-	public:
-		void foo(const A& a)
+		cout << "A(int a)" << endl;
+	}
+	A(const A& aa)
+		:_a1(aa._a1) // 拷贝构造函数 copy ctor
+	{
+		cout << "A(const A& aa)" << endl;
+	}
+	A& operator=(const A& aa) // 赋值运算符重载函数  Assignment Operator Overloading
+	{
+		cout << "A& operator=(const A& aa)" << endl;
+		if (this != &aa)
 		{
-			cout << _k << endl; //OK
-			//cout << a._h << endl; //OK
+			_a1 = aa._a1;
 		}
-		int _b1;
-	};
+		return *this;
+	}
+	~A() // 析构函数 Destructor
+	{
+		cout << "~A()" << endl;
+	}
+private:
+		int _a1 = 1;
 };
-int A::_k = 1;
+void f1(A aa)
+{}
+A f2()
+{
+	A aa;
+	return aa;
+}
 int main()
 {
-	cout << sizeof(A) << endl;
-	//A::B b;
-	//A aa;
-	//b.foo(aa);
+	//// 传值传参​
+	A aa1; // 默认构造
+	//cout << "*****" << endl;
+	f1(aa1); // 拷贝构造临时变量 + 函数结束后 析构临时变量
+	cout << "*****" << endl;
+	cout << endl; 
+	////return 0; // 执行return 前，析构aa1
+
+
+	// 如果不考虑编译器优化
+	// 1被隐式类型转换为A ，需要构造临时匿名对象，调用一次默认构造
+	// 1作为值被传递给f1(aa), 值传递调用拷贝构造，A 临时匿名对象 拷贝构造 aa,调用一次拷贝构造
+	// f1()函数结束，析构 aa,调用一次析构
+	// f1(1);调用函数结束，析构临时匿名对象，调用一次析构
+	// -----
+	// 编译器优化后，把临时对象优化了，直接用1构造aa，过程中 调用一次默认构造、一次析构
+	//f1(1); 
+
+	// 构造匿名对象，匿名对象直接拷贝构造aa，aa析构，匿名对象析构
+	// 期间不存在 匿名的临时对象，因为A(2) 与 aa的类型时匹配的，传参直接调用拷贝构造，临时对象的产生一般发生在 类型转换和 函数返回值。
+	//f1(A(2)); 
+
+	//cout << endl;
+	//cout << "***********************************************" << endl;
+
+
+
+	// 传值返回​
+	// 不优化的情况下传值返回，编译器会生成一个拷贝返回对象的临时对象作为函数调用表达式的返回值​
+	// 无优化 （vs2019 debug）​
+	// 一些编译器会优化得更厉害，将构造的局部对象和拷贝构造的临时对象优化为直接构造（vs2022 debug）​
+	// 构造aa,拷贝构造临时对象，析构aa，析构临时对象
+	//f2();
+	//cout << endl;
+
+	// 返回时一个表达式中，连续拷贝构造+拷贝构造->优化一个拷贝构造 （vs2019 debug）​
+	// 一些编译器会优化得更厉害，进行跨行合并优化，将构造的局部对象aa和拷贝的临时对象和接收返回值对象aa2优化为一个直接构造。（vs2022 debug）​
+	// 构造aa,拷贝构造临时对象，析构aa，拷贝构造aa2，析构临时对象，析构aa2
+	//A aa2 = f2();
+	//cout << endl;
+	 
+	 
+	// 一个表达式中，开始构造，中间拷贝构造+赋值重载->无法优化（vs2019 debug）​
+	// 一些编译器会优化得更厉害，进行跨行合并优化，将构造的局部对象aa和拷贝临时对象合并为一个直接构造（vs2022 debug）​
+	// 默认构造aa,aa拷贝构造临时对象，aa析构，临时对象 赋值重载 aa1，临时对象析构，aa1析构
+	aa1 = f2();
+	cout << endl;
 	return 0;
 }
