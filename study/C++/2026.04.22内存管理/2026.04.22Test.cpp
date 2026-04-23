@@ -85,6 +85,72 @@ void Test()
 //}
 #include<iostream>
 using namespace std;
+//
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		: _a(a)
+//	{
+//		cout << "A():" << this << endl;
+//	}
+//	//~A()
+//	//{
+//	//	cout << "~A():" << this << endl;
+//	//}
+//private:
+//	//注意：在申请自定义类型的空间时，new会调用构造函数，delete会调用析构函数，而malloc与free不会。
+//	int _a;
+//	//int _b;
+//};
+//
+///*
+//	new 的底层是malloc，new对象会调用operator new,operator new 里是malloc，成功正常返回，失败则抛异常 
+//	new = 先operator new + 再调用构造函数
+//
+//	new[] 会先调用1次operator new[]开一块连续的大空间，再在这块内存上调用N次构造函数
+//	new[] = 1次operator new[] + N次构造函数
+//
+//	delete 的底层时 free ，delete对象会调用 operator delete,operator delete里是free。
+//	delete = 调用析构函数  + operator delete
+//
+//	delete[] 先调用 N次 析构函数，再调用1次 operator delete[]释放这块空间，
+//	delete[] = N次析构函数 + 1次operator delete[]
+//
+//*/
+//
+//int main()
+//{
+//	// new/delete 和 malloc/free最大区别是 new/delete对于【自定义类型】除了开空间还会调用构造函数和析构函数
+//	A* p1 = (A*)malloc(sizeof(A));
+//	A* p2 = new A(1);
+//	free(p1);
+//	delete p2;
+//
+//
+//	// 内置类型是几乎是一样的
+//	int* p3 = (int*)malloc(sizeof(int)); // C
+//	int* p4 = new int;
+//	free(p3);
+//	delete p4;
+//
+//
+//	A* p5 = (A*)malloc(sizeof(A) * 10);
+//	A* p6 = new A[10];	// 正常10int为40字节，
+//						// 编译器开了44字节，在第一个地址前多开了4字节存 10，方便确定析构次数。而返回的地址是从4字节之后返回40个字节
+//						// 出现这种情况是因为A类写了析构函数。
+//						// 此时如果只使用delete p6,缺少[],则会崩溃，释放空间不能只释放一半
+//						// 尽量匹配使用new/delete 和 new[]/delete[]
+//
+//	free(p5);
+//	delete[] p6;
+//
+//
+//	return 0;
+//}
+
+
+// 2026.04.23 下午看6-7的位置
 
 class A
 {
@@ -94,64 +160,38 @@ public:
 	{
 		cout << "A():" << this << endl;
 	}
-	//~A()
-	//{
-	//	cout << "~A():" << this << endl;
-	//}
+	~A()
+	{
+		cout << "~A():" << this << endl;
+	}
 private:
-	//注意：在申请自定义类型的空间时，new会调用构造函数，delete会调用析构函数，而malloc与free不会。
 	int _a;
-	//int _b;
 };
-
-/*
-	new 的底层是malloc，new对象会调用operator new,operator new 里是malloc，成功正常返回，失败则抛异常 
-	new = 先operator new + 再调用构造函数
-
-	new[] 会先调用1次operator new[]开一块连续的大空间，再在这块内存上调用N次构造函数
-	new[] = 1次operator new[] + N次构造函数
-
-	delete 的底层时 free ，delete对象会调用 operator delete,operator delete里是free。
-	delete = 调用析构函数  + operator delete
-
-	delete[] 先调用 N次 析构函数，再调用1次 operator delete[]释放这块空间，
-	delete[] = N次析构函数 + 1次operator delete[]
-
-*/
-
+// 定位new/replacement new
 int main()
 {
-	// new/delete 和 malloc/free最大区别是 new/delete对于【自定义类型】除了开空间还会调用构造函数和析构函数
+	// p1现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没有执行
 	A* p1 = (A*)malloc(sizeof(A));
-	A* p2 = new A(1);
+	new(p1)A; // 注意：如果A类的构造函数有参数时，此处需要传参
+	p1->~A();
 	free(p1);
-	delete p2;
 
-
-	// 内置类型是几乎是一样的
-	int* p3 = (int*)malloc(sizeof(int)); // C
-	int* p4 = new int;
-	free(p3);
-	delete p4;
-
-
-	A* p5 = (A*)malloc(sizeof(A) * 10);
-	A* p6 = new A[10];	// 正常10int为40字节，
-						// 编译器开了44字节，在第一个地址前多开了4字节存 10，方便确定析构次数。而返回的地址是从4字节之后返回40个字节
-						// 出现这种情况是因为A类写了析构函数。
-						// 此时如果只使用delete p6,缺少[],则会崩溃，释放空间不能只释放一半
-						// 尽量匹配使用new/delete 和 new[]/delete[]
-
-	free(p5);
-	delete[] p6;
-
-
+	A * p2 = (A*)operator new(sizeof(A));
+	new(p2)A(10);
+	p2->~A();
+	operator delete(p2);
 	return 0;
 }
 
-
-// 2026.04.23 下午看6-7的位置
-
+//malloc / free和new / delete的区别
+/*
+	1. 都是在堆开空间，并且需要自己释放
+	2. malloc只开空间；new还可以初始化
+	3. malloc开空间要自己计算空间大小；new可以根据类型自动开辟，如果需要多空间用[]即可
+	4. maloc返回值为void*使用需要手动强转；new不用强转，传值的时候有类型
+	5. malloc失败返回NULL，使用时需要判空；new失败会抛异常，需要捕获异常
+	6. malloc只进行开空间/free只进行释放，new创建对象时先开空间再调用构造函数/delete先析构再释放空间
+	7. malloc/free是函数，new/delete是操作符
 
 
 
