@@ -98,8 +98,11 @@ auto func1()
 
 int main()
 {
-	TestFunc1();
-
-
+	//TestFunc1();
+	int a[26] = { 0 };
+	for (auto ch : a)
+	{
+		cout << ch << ' ';
+	}
 	return 0;
 }
