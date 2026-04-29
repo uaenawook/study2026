@@ -57,11 +57,28 @@ namespace wx
 		string suffix = s.substr(6);
 		cout << suffix.c_str() << endl;
 	}
+
+	void String_Test2()
+	{
+
+		string s1("hello world");
+		string s2("hello world");
+		cout << (s1 >= s2) << endl;
+
+		cout << s1 << endl;
+
+		cin >> s1;
+		cout << s1 << endl;
+
+
+
+	}
 }
 
 int main()
 {
-	wx::String_Test1();
+	//wx::String_Test1();
+	wx::String_Test2();
 
 	//string s4("hello world");
 	//s4.insert(5, "x");

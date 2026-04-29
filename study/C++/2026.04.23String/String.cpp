@@ -168,4 +168,78 @@ namespace wx
 		return tmp;
 	}
 
+
+	bool operator<(const string& s1, const string& s2)
+	{
+		return strcmp(s1.c_str(), s2.c_str()) < 0;
+	}
+	bool operator<=(const string& s1, const string& s2)
+	{
+		return s1 < s2 || s1 == s2;
+	}
+	bool operator>(const string& s1, const string& s2)
+	{
+		return !(s1 <= s2);
+	}
+	bool operator>=(const string& s1, const string& s2)
+	{
+		return !(s1 < s2);
+	}
+	bool operator==(const string& s1, const string& s2)
+	{
+		return strcmp(s1.c_str(), s2.c_str()) == 0;
+	}
+	bool operator!=(const string& s1, const string& s2)
+	{
+		return !(s1 == s2);
+	}
+
+	ostream& operator<<(ostream& out, const string& s)
+	{
+		for (auto ch : s)
+		{
+			out << ch;
+		}
+		return out;
+	}
+	istream& operator>>(istream& in, string& s)
+	{
+		//s.clear();
+		//char ch = in.get();
+		//while (ch != '\n' )
+		//{
+		//	s += ch;
+		//	ch = in.get();
+		//}
+		//return in;
+
+		// 优化扩容次数
+		s.clear();
+
+		const int N = 256;
+		char buff[N];
+		int i = 0;
+
+		char ch = in.get();
+		while (ch != '\n')
+		{
+			buff[i++] = ch;
+			if (i == N - 1)
+			{
+				buff[i] = '\0';
+				s += buff;
+				i = 0;
+			}
+
+			ch = in.get();
+		}
+
+		if (i > 0)
+		{
+			buff[i] = '\0';
+			s += buff;
+		}
+		return in;
+	}
+
 }
