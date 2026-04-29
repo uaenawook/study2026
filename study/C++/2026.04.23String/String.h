@@ -2,6 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
 #include<iostream>
+#include<string>
 #include<assert.h>
 
 using namespace std;
@@ -76,12 +77,25 @@ namespace wx
 			strcpy(_str, str);
 		}
 
-		string(string& str)
+		string(const string& str)
 		{
 			_size = str._size;
 			_capacity = str._capacity;
 			_str = new char[_capacity + 1];
 			strcpy(_str, str.c_str());
+		}
+
+		string& operator=(const string& s)
+		{
+			if (this != &s)
+			{
+				delete[] _str;
+				_str = new char[s._capacity + 1];
+				strcpy(_str, s._str);
+				_size = s._size;
+				_capacity = s._capacity;
+			}
+			return *this;
 		}
 
 		~string()
@@ -100,9 +114,17 @@ namespace wx
 		string& operator+=(char ch);
 		string& operator+=(const char* str);
 
+
 		void insert(size_t pos, char ch);
 		void insert(size_t pos, const char* str);
 		void erase(size_t pos, size_t len = npos);
+
+
+		size_t find(char ch, size_t pos = 0);
+		size_t find(const char* str, size_t pos = 0);
+		string substr(size_t pos = 0, size_t len = npos);
+
+
 
 
 	private:
@@ -114,7 +136,15 @@ namespace wx
 
 		static const size_t npos;
 	};
+	bool operator<(const string& s1, const string& s2);
+	bool operator<=(const string& s1, const string& s2);
+	bool operator>(const string& s1, const string& s2);
+	bool operator>=(const string& s1, const string& s2);
+	bool operator==(const string& s1, const string& s2);
+	bool operator!=(const string& s1, const string& s2);
 
+	ostream& operator<<(ostream& out, const string& s);
+	istream& operator>>(istream& in, string& s);
 
 	void String_Test1();
 }
