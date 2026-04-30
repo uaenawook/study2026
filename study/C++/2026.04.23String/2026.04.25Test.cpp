@@ -73,12 +73,44 @@ namespace wx
 
 
 	}
+
+
+	// 改造拷贝构造和赋值拷贝
+	void String_Test3()
+	{
+
+		string s0; // 默认拷贝构造
+		string s1("hello wx");//拷贝构造
+		string s2("hello world"); //拷贝构造
+		string s3(s1); // 拷贝构造
+		s2 = s1; //赋值运算符重载
+
+		cout << s1 << endl << s2 << endl << s3 << endl;
+	}
+
+	void String_Test4()
+	{
+		string s1("hello world");
+		string s2 = s1;
+
+		cout << s1 << endl;
+		cout << s2 << endl;
+
+		string s3("xxxxxxxxxxxxxx");
+		s1 = s3;
+
+		cout << s1 << endl;
+		cout << s3 << endl;
+	}
 }
-// 改造拷贝构造和赋值拷贝
+
+
 int main()
 {
 	//wx::String_Test1();
-	wx::String_Test2();
+	//wx::String_Test2();
+	wx::String_Test3();
+	//wx::String_Test4();
 
 	//string s4("hello world");
 	//s4.insert(5, "x");

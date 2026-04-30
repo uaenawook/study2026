@@ -20,37 +20,45 @@ namespace wx
 		{
 			return _str;
 		}
+
 		iterator end()
 		{
 			return _str + _size;
 		}
+
 		const_iterator begin() const
 		{
 			return _str;
 		}
+
 		const_iterator end() const
 		{
 			return _str + _size;
 		}
+
 		void clear()
 		{
 			_str[0] = '\0';
 			_size = 0;
 		}
+
 		size_t size() const
 		{
 			return _size;
 		}
+
 		size_t capacity() const
 		{
 			return _capacity;
 		}
+
 		char& operator[](size_t pos)
 		{
 			assert(pos <= _size);
 			//return (*this)._str[pos];
 			return _str[pos];
 		}
+
 		const char& operator[](size_t pos) const
 		{
 			assert(pos <= _size);
@@ -77,26 +85,57 @@ namespace wx
 			strcpy(_str, str);
 		}
 
+		//string(const string& str)
+		//{
+		//	_size = str._size;
+		//	_capacity = str._capacity;
+		//	_str = new char[_capacity + 1];
+		//	strcpy(_str, str.c_str());
+		//}
+		void swap(string& s)
+		{
+			std::swap(_str, s._str);
+			std::swap(_size, s._size);
+			std::swap(_capacity, s._capacity);
+		}
 		string(const string& str)
 		{
-			_size = str._size;
-			_capacity = str._capacity;
-			_str = new char[_capacity + 1];
-			strcpy(_str, str.c_str());
+			string tmp(str.c_str());
+			swap(tmp);
 		}
 
-		string& operator=(const string& s)
+		//string& operator=(const string& s)
+		//{
+		//	if (this != &s)
+		//	{
+		//		delete[] _str;
+		//		_str = new char[s._capacity + 1];
+		//		strcpy(_str, s._str);
+		//		_size = s._size;
+		//		_capacity = s._capacity;
+		//	}
+		//	return *this;
+		//}
+
+		//string& operator=(const string& s)
+		//{
+		//	if (this != &s)
+		//	{
+		//		string tmp(s.c_str());
+		//		swap(tmp);
+		//	}
+		//	return *this;
+		//}
+
+		// s1 = s3 , 调试虽然不会进来，其实是调用了 赋值重载
+		//			直接构造tmp 交换了
+		string& operator=(string tmp)
 		{
-			if (this != &s)
-			{
-				delete[] _str;
-				_str = new char[s._capacity + 1];
-				strcpy(_str, s._str);
-				_size = s._size;
-				_capacity = s._capacity;
-			}
+			// cout << "operator=" << endl;  // 添加这句调试
+			swap(tmp);
 			return *this;
 		}
+
 
 		~string()
 		{
@@ -129,9 +168,9 @@ namespace wx
 
 	private:
 
-		char* _str;
-		size_t _size;
-		size_t _capacity;
+		char* _str = nullptr;
+		size_t _size = 0;
+		size_t _capacity = 0;
 
 
 		static const size_t npos;
