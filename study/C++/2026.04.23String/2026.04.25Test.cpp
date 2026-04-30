@@ -74,7 +74,7 @@ namespace wx
 
 	}
 }
-
+// 改造拷贝构造和赋值拷贝
 int main()
 {
 	//wx::String_Test1();
