@@ -10,6 +10,18 @@ namespace wx
 		typedef T* iterator;
 		typedef const T* const_iterator;
 
+		//构造函数、析构函数
+		// 写了析构函数test_vector4会崩溃 2026.05.02遗留
+		vector()
+		{}
+		~vector()
+		{
+			delete[] _start;
+			_start = _finish = _end_of_storage = nullptr;
+		}
+		
+		//operator=
+
 		size_t size()
 		{
 			return _finish - _start;
@@ -118,6 +130,72 @@ namespace wx
 			return *(_start + i);
 		}
 
+		// 插入数据，可能会扩容
+		void resize(size_t n, T val = T())
+		{
+			// n<_finish ,删除数据到n个
+			// _end_of_storage < n >_finish 插入n个val，增加_finish
+			// n > _end_of_storage 扩容
+			if (n <= size())
+			{
+				_finish = _start + n;
+			}
+			else
+			{
+				reserve(n+size());
+				for(int i = size();i<n;++i)
+				{
+					push_back(val);
+				}
+			}
+
+			
+		}
+
+		iterator erase(iterator pos)
+		{
+			// 在pos位置进行删除，返回pos的位置
+			assert(pos < _finish&& pos >= _start);
+			// 挪动数据
+			iterator cur = pos+1;
+			while (cur != _finish)
+			{
+				*(cur - 1) = *cur;
+				++cur;
+			}
+			--_finish;
+			return pos;
+		}
+
+		iterator erase(iterator first, iterator last)
+		{
+			// 删除一段区间 删除是[first,last) ,删去区间是作弊又开，返回的是first
+			size_t n = last - first;
+			vector<int>::iterator cur = last;
+			while (cur != _finish)
+			{
+				*(cur - n) = *cur;
+				++cur;
+			}
+			_finish -= n;
+			return first;
+		}
+
+		void clear()
+		{
+			_finish = _start;
+		}
+
+
+		void swap(vector<T>& v)
+		{
+			std::swap(_start, v._start);
+			std::swap(_finish, v._finish);
+			std::swap(_end_of_storage, v._end_of_storage);
+		}
+
+	
+
 	private:
 		iterator _start = nullptr;
 		iterator _finish = nullptr;
@@ -139,6 +217,8 @@ namespace wx
 
 
 	}
+
+	//print_container()
 }
 
 //  继续实现vector的插入、插入n个数据，插入不同类型的数据、迭代器失效、深拷贝、等功能
