@@ -12,27 +12,66 @@ namespace wx
 
 		//构造函数、析构函数
 		// 写了析构函数test_vector4会崩溃 2026.05.02遗留
+		// 缺少深拷贝的拷贝构造
 		vector()
 		{}
+
+		// 1. 自己开空间，拷贝
+		/*vector(const vector<T>& v)
+		{
+			size_t capacity = v.capacity();
+			_start = new T[capacity];
+			_finish = _start;
+			_end_of_storage = _start + capacity;
+
+			for (size_t i = 0; i < v.size(); i++)
+			{
+				*_finish = v[i];
+				++_finish;
+			}
+
+		}*/
+
+		// 2. 直接给this扩容，然后插入数据
+		vector(const vector<T>& v)
+		{
+			reserve(v.capacity());
+			for (auto& e : v)
+			{
+				push_back(e);
+			}
+		}
+
+		// 2026-5-4继续写
+		//vector(InputIterator first, InputIterator last)
+		//vector(size_t n, const T& val = T())
+		//vector(int n, const T & val = T())
+
+
+		vector<T>& operator=(vector<T> tmp)
+		{
+			swap(tmp);
+			return *this;
+		}
+
 		~vector()
 		{
 			delete[] _start;
 			_start = _finish = _end_of_storage = nullptr;
 		}
-		
-		//operator=
-
-		size_t size()
-		{
-			return _finish - _start;
-		}
-
-		size_t capacity()
+		size_t capacity() const
 		{
 			return _end_of_storage - _start;
 		}
 
-		bool empty()
+		size_t size() const
+		{
+			return _finish - _start;
+		}
+		
+
+		
+		bool empty() const
 		{
 			return _start == _finish;
 		}
@@ -47,12 +86,12 @@ namespace wx
 			return _finish;
 		}
 
-		const_iterator& begin() const
+		const_iterator begin() const
 		{
 			return _start;
 		}
 
-		const_iterator& end() const
+		const_iterator end() const
 		{
 			return _finish;
 		}
