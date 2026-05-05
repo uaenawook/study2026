@@ -37,6 +37,22 @@ void test_list()
 	}
 	cout << endl;
 }
+void test_list2()
+{
+	list<int> l1;
+	l1.push_back(1);
+	l1.push_back(2);
+	l1.push_back(3);
+	l1.push_back(4);
+
+	list<int>::iterator it = l1.begin();
+	while (it != l1.end())
+	{
+		cout << *it << " ";
+		++it;
+	}
+	cout << endl;
+}
 
 namespace wx
 {
@@ -46,12 +62,46 @@ namespace wx
 		l1.push_back(1);
 		l1.push_back(2);
 		l1.push_back(3);
+		l1.push_back(4);
+		
 
+		list<int>::iterator it = l1.begin();
+		while (it != l1.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
+
+		l1.insert(l1.begin(), 200);
+		l1.insert(l1.end(), 200);
+
+
+		it = l1.begin();
+		while (it != l1.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
+
+
+		l1.erase(--l1.end());
+		l1.erase(--l1.end());
+
+		it = l1.begin();
+		while (it != l1.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
 	}
 }
 int main()
 {
 	//test_list();
+	//test_list2();
 	wx::test_list1();
 	return 0;
 }
