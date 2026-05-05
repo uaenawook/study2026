@@ -43,10 +43,33 @@ namespace wx
 		}
 
 		// 2026-5-4继续写
-		//vector(InputIterator first, InputIterator last)
-		//vector(size_t n, const T& val = T())
-		//vector(int n, const T & val = T())
-
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last)
+		{
+			//size_t n = last - first;
+			//reserve(n);
+			while (first != last)
+			{
+				push_back(*first);
+				++first;
+			}
+		}
+		vector(size_t n, const T& val = T())
+		{
+			reserve(n);
+			while (n--)
+			{
+				push_back(val);
+			}
+		}
+		vector(int n, const T& val = T())
+		{
+			reserve(n);
+			while (n--)
+			{
+				push_back(val);
+			}
+		}
 
 		vector<T>& operator=(vector<T> tmp)
 		{
@@ -112,7 +135,11 @@ namespace wx
 			{
 				size_t old_size = size();
 				T* tmp = new T[n];
-				memcpy(tmp, _start, size()*sizeof(T)); //memcpy 传大小的时候必须算字节
+				//memcpy(tmp, _start, old_size *sizeof(T)); //memcpy 传大小的时候必须算字节
+				for (size_t i = 0; i < old_size; ++i)
+				{
+					tmp[i] = _start[i];
+				}
 				delete[] _start;
 
 				_start = tmp;
@@ -181,7 +208,7 @@ namespace wx
 			}
 			else
 			{
-				reserve(n+size());
+				reserve(n);
 				for(int i = size();i<n;++i)
 				{
 					push_back(val);
@@ -256,8 +283,15 @@ namespace wx
 
 
 	}
-
-	//print_container()
+	template <class container>
+	void print_container(const container& v)
+	{
+		for (const auto& e : v)
+		{
+			cout << e << " ";
+		}
+		cout << endl;
+	}
 }
 
 //  继续实现vector的插入、插入n个数据，插入不同类型的数据、迭代器失效、深拷贝、等功能

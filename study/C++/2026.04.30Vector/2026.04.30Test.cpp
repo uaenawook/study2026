@@ -178,6 +178,28 @@ namespace wx
 
 
 	}
+
+	void test_vector6()
+	{
+		vector<int> v1(10,2);
+		v1.print_vector();
+
+		vector<int> v2;
+		v2.push_back(1);
+		v2.push_back(2);
+		v2.push_back(3);
+		v2.push_back(4);
+		v2.push_back(5);
+
+		vector<int> v3(v2.begin() + 1, v2.begin() + 4);
+		v3.print_vector();
+		print_container(v3);
+		v3.resize(6, 0);
+		print_container(v3);
+
+		cout << v3.capacity();
+
+	}
 }
 
 
@@ -188,7 +210,7 @@ int main()
 	//wx::test_vector1();
 	//wx::test_vector2();
 
-	wx::test_vector5();
+	wx::test_vector6();
 	
 	return 0;
 }
