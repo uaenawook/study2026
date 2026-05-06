@@ -97,11 +97,42 @@ namespace wx
 		}
 		cout << endl;
 	}
+
+	void test_list2()
+	{
+		list<int> l1;
+		l1.push_back(1);
+		l1.push_back(2);
+		l1.push_back(3);
+		l1.push_back(4);
+
+		list<int> l2(l1);
+		printf_container(l2);
+
+		list<int> l3;
+		l3 = l2;
+		printf_container(l3);
+
+		l3.push_front(200);
+		printf_container(l3);
+		l3.pop_back();
+		printf_container(l3);
+		l3.pop_front();
+		printf_container(l3);
+		l3.clear();
+		l3.push_front(100);
+		printf_container(l3);
+
+		list<int> l4({ 1,2,5,8,9,6 });
+		printf_container(l4);
+
+
+	}
 }
 int main()
 {
 	//test_list();
 	//test_list2();
-	wx::test_list1();
+	wx::test_list2();
 	return 0;
 }

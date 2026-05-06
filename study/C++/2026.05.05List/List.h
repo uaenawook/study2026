@@ -22,11 +22,12 @@ namespace wx
 		{}
 	};
 
-	template <class T>
+	// 改造const iterator模板类
+	template <class T,class Ref,class Ptr>
 	struct list_iterator
 	{
 		typedef list_node<T> Node;
-		typedef list_iterator<T> iterator;
+		typedef list_iterator<T, Ref, Ptr> self;
 
 		Node* _node;
 
@@ -35,29 +36,51 @@ namespace wx
 			:_node(node)
 		{}
 
-		T& operator*()
+		Ref operator*()
 		{
 			return _node->data;
 		}
 
-		iterator& operator++()
+		Ptr operator->()
+		{
+			return &(_node->data);
+		}
+
+
+		// 补充后置++ 后置++先使用再++，返回++之前的值
+		self operator++(int)
+		{
+			self tmp(*this);
+			_node = _node->next;
+			return tmp;
+		}
+
+		self& operator++()
 		{
 			_node = _node->next;
 			return *this;
 		}
 
-		iterator& operator--()
+		// 补充后置--
+		self operator--(int)
+		{
+			self tmp(*this);
+			_node = _node->prev;
+			return tmp;
+		}
+
+		self& operator--()
 		{
 			_node = _node->prev;
 			return *this;
 		}
 
-		bool operator!=(const iterator& L) const
+		bool operator!=(const self& L) const
 		{
 			return _node != L._node;
 		}
 
-		bool operator==(const iterator& L) const
+		bool operator==(const self& L) const
 		{
 			return _node == L._node;
 		}
@@ -68,7 +91,8 @@ namespace wx
 	{
 		typedef list_node<T> Node;
 	public:
-		typedef list_iterator<T> iterator;
+		typedef list_iterator<T, T&, T*> iterator;
+		typedef list_iterator<T, const T&, const T*> const_iterator;
 
 		iterator begin()
 		{
@@ -77,7 +101,7 @@ namespace wx
 
 			//return iterator(_head->next);
 
-			return _head->next;
+			return _head->next; // 因为返回值是iterator 所以会发生隐式类型转换，使_head->next转换为iterator类型
 		}
 
 		iterator end()
@@ -85,7 +109,18 @@ namespace wx
 			return _head;
 		}
 
-		list()
+		const_iterator begin() const
+		{
+			return _head->next;
+		}
+		const_iterator end() const
+		{
+			return _head;
+		}
+
+
+
+		void empty_init()
 		{
 			_head = new Node;
 			_head->prev = _head;
@@ -93,20 +128,100 @@ namespace wx
 			_size = 0;
 		}
 
+		list()
+		{
+			empty_init();
+		}
+
+		~list()
+		{
+			clear();
+			delete _head;
+			_head = nullptr;
+		}
+		// list多参数构造
+		list(initializer_list<T> il)
+		{
+			empty_init();
+			for (auto& e : il)
+			{
+				push_back(e);
+			}
+		}
+
+		//lt2(lt1)
+		list(const list<T>& lt)
+		{
+			empty_init();
+			for (auto& e : lt)
+			{
+				push_back(e);
+			}
+		}
+		// clear
+		void clear()
+		{
+			typename list<T>::iterator it = (*this).begin();
+			while (it != end())
+			{
+				it = erase(it);
+			}
+		}
+
+		void swap(list<T>& lt)
+		{
+			std::swap(_head, lt._head);
+			std::swap(_size, lt._size);
+		}
+
+		// lt1 = lt3
+		//list<T>& operator=(const list<T>& lt)
+		//{
+		//	clear();
+		//	for (auto& e : lt)
+		//	{
+		//		push_back(e);
+		//	}
+		//	return *this;
+		//}
+		list<T>& operator=(list<T> lt)
+		{
+			swap(lt);
+			return *this;
+		}
+
+
+		
+
 		void push_back(const T& val)
 		{
-			Node* prev = _head->prev;
+			/*Node* prev = _head->prev;
 			Node* newNode = new Node(val);
 
 			newNode->next = _head;
 			newNode->prev = prev;
 			prev->next = newNode;
 			_head->prev = newNode;
-			++_size;
+			++_size;*/
+			insert(end(), val);
+		}
+		
+		void push_front(const T& val)
+		{
+			insert(begin(), val);
 		}
 
 
-		void insert(iterator pos,const T& val)
+		void pop_back()
+		{
+			erase(--end());
+		}
+		void pop_front()
+		{
+			erase(begin());
+		}
+
+		Node* insert(iterator pos,const T& val)
 		{
 			Node* newNode = new Node(val);
 
@@ -120,9 +235,10 @@ namespace wx
 			prev->next = newNode;
 
 			++_size;
+			return newNode;
 		}
 		
-		void erase(iterator pos)
+		Node* erase(iterator pos)
 		{
 			assert(pos != end());
 			Node* prev = pos._node->prev;
@@ -133,6 +249,7 @@ namespace wx
 
 			delete pos._node;
 			--_size;
+			return next;
 		}
 
 
@@ -149,4 +266,17 @@ namespace wx
 		Node* _head;
 		size_t _size;
 	};
+
+	template <class container>
+	void printf_container(const container& t)
+	{
+		//auto it = t.begin();
+		typename container::const_iterator it = t.begin();
+		while (it != t.end())
+		{
+			cout << *it << " ";
+			++it;
+		}
+		cout << endl;
+	}
 }
