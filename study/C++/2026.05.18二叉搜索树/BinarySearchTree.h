@@ -67,6 +67,12 @@ public:
 		_InOrderTree(_root);
 	}
 
+	//Find
+	
+
+	//Erase
+
+
 private:
 	BinarySearchTreeNode<T>* _root;
 
